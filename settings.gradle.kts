@@ -12,5 +12,5 @@ pluginManagement {
         }
     }
 }
-rootProject.name = "kmm-library-template"
+rootProject.name = "azure-speech"
 
