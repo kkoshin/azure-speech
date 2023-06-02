@@ -4,8 +4,8 @@ plugins {
     id("maven-publish")
 }
 
-group = "com.github.kkoshin"
-version = "1.0-SNAPSHOT"
+group = "io.github.kkoshin"
+version = "0.1.0-SNAPSHOT"
 
 repositories {
     google()
@@ -71,5 +71,18 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "OSSRH"
+            setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = System.getenv("MAVEN_USERNAME")
+                password = System.getenv("MAVEN_PASSWORD")
+            }
+        }
     }
 }
