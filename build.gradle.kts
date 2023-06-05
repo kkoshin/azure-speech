@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "io.github.kkoshin"
-version = "0.1.0-SNAPSHOT"
+version = "0.1.0-LOCAL"
 
 repositories {
     google()
@@ -17,7 +17,7 @@ repositories {
  */
 kotlin {
     android {
-        publishLibraryVariants("release", /*"debug"*/)
+        publishLibraryVariants("release" /*"debug"*/)
     }
     iosSimulatorArm64 {
         binaries {
@@ -34,7 +34,11 @@ kotlin {
         }
     }
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
@@ -42,7 +46,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation("com.google.android.material:material:1.7.0")
+                implementation("com.microsoft.cognitiveservices.speech:client-sdk:1.28.0")
             }
         }
         val androidInstrumentedTest by getting {
@@ -69,8 +73,8 @@ android {
         targetSdkVersion(32)
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 }
 
