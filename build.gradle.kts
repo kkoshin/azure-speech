@@ -1,5 +1,6 @@
 plugins {
-    kotlin("multiplatform") version "1.8.20"
+    kotlin("multiplatform") version "1.8.21"
+    kotlin("native.cocoapods") version "1.8.21"
     id("com.android.library")
     id("maven-publish")
 }
@@ -20,19 +21,36 @@ kotlin {
         publishLibraryVariants("release" /*"debug"*/)
     }
     iosSimulatorArm64 {
-        binaries {
-            framework {
-                baseName = "library"
-            }
+//        compilations.getByName("main") {
+//            val MicrosoftSpeech by cinterops.creating {
+//                // Path to .def file
+//                defFile("${project.buildDir}/cocoapods/defs/MicrosoftCognitiveServicesSpeech_iOS.def")
+//
+//                compilerOpts("-framework", "MicrosoftCognitiveServicesSpeech", "-F${project.buildDir}/cocoapods/synthetic/IOS/Pods/MicrosoftCognitiveServicesSpeech-iOS/MicrosoftCognitiveServicesSpeech.xcframework/ios-arm64_x86_64-simulator/MicrosoftCognitiveServicesSpeech.framework")
+//            }
+//        }
+//
+//        binaries.all {
+//            // Tell the linker where the framework is located.
+//            linkerOpts("-framework", "MicrosoftCognitiveServicesSpeech_iOS", "-F${project.buildDir}/cocoapods/synthetic/IOS/Pods/MicrosoftCognitiveServicesSpeech-iOS/MicrosoftCognitiveServicesSpeech.xcframework/ios-arm64_x86_64-simulator/MicrosoftCognitiveServicesSpeech.framework")
+//        }
+    }
+    iosArm64()
+
+    cocoapods {
+        summary = "Some description for the Shared Module"
+        homepage = "Link to the Shared Module homepage"
+        ios.deploymentTarget = "13.5"
+//        framework {
+//            baseName = "azure-speech"
+//            isStatic = true
+//        }
+        // TODO(Jiangc): 无法正确的完成 cinterop，难道所有的 XCFramework 都不行？
+        pod("MicrosoftCognitiveServicesSpeech-iOS") {
+            version = "~> 1.25"
         }
     }
-    iosArm64 {
-        binaries {
-            framework {
-                baseName = "library"
-            }
-        }
-    }
+
     sourceSets {
         val commonMain by getting {
             dependencies {
