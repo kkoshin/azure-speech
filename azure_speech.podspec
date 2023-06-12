@@ -1,15 +1,15 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'azure_speech'
     spec.version                  = '0.1.0-LOCAL'
-    spec.homepage                 = 'Link to the Shared Module homepage'
+    spec.homepage                 = ''
     spec.source                   = { :http=> ''}
     spec.authors                  = ''
     spec.license                  = ''
-    spec.summary                  = 'Some description for the Shared Module'
+    spec.summary                  = ''
     spec.vendored_frameworks      = 'build/cocoapods/framework/azure_speech.framework'
     spec.libraries                = 'c++'
-    spec.ios.deployment_target = '13.5'
-    spec.dependency 'MicrosoftCognitiveServicesSpeech-iOS', '~> 1.25'
+                
+                
                 
     spec.pod_target_xcconfig = {
         'KOTLIN_PROJECT_PATH' => '',
