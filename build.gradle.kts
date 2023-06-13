@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "io.github.kkoshin"
-version = "0.1.0-LOCAL"
+version = "0.1.0-SNAPSHOT"
 
 repositories {
     google()
@@ -26,7 +26,8 @@ kotlin {
     cocoapods {
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
-        ios.deploymentTarget = "13.5"
+        ios.deploymentTarget = "15.2"
+
         pod("MicrosoftCognitiveServicesSpeech-iOS") {
             version = "~> 1.25"
             packageName = "MicrosoftCognitiveServicesSpeech"

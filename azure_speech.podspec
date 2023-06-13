@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'azure_speech'
-    spec.version                  = '0.1.0-LOCAL'
+    spec.version                  = '0.1.0-SNAPSHOT'
     spec.homepage                 = 'Link to the Shared Module homepage'
     spec.source                   = { :http=> ''}
     spec.authors                  = ''
@@ -8,7 +8,7 @@ Pod::Spec.new do |spec|
     spec.summary                  = 'Some description for the Shared Module'
     spec.vendored_frameworks      = 'build/cocoapods/framework/azure_speech.framework'
     spec.libraries                = 'c++'
-    spec.ios.deployment_target = '13.5'
+    spec.ios.deployment_target = '15.2'
     spec.dependency 'MicrosoftCognitiveServicesSpeech-iOS', '~> 1.25'
                 
     spec.pod_target_xcconfig = {
