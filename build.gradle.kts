@@ -20,34 +20,18 @@ kotlin {
     android {
         publishLibraryVariants("release" /*"debug"*/)
     }
-    iosSimulatorArm64 {
-//        compilations.getByName("main") {
-//            val MicrosoftSpeech by cinterops.creating {
-//                // Path to .def file
-//                defFile("${project.buildDir}/cocoapods/defs/MicrosoftCognitiveServicesSpeech_iOS.def")
-//
-//                compilerOpts("-framework", "MicrosoftCognitiveServicesSpeech", "-F${project.buildDir}/cocoapods/synthetic/IOS/Pods/MicrosoftCognitiveServicesSpeech-iOS/MicrosoftCognitiveServicesSpeech.xcframework/ios-arm64_x86_64-simulator/MicrosoftCognitiveServicesSpeech.framework")
-//            }
-//        }
-//
-//        binaries.all {
-//            // Tell the linker where the framework is located.
-//            linkerOpts("-framework", "MicrosoftCognitiveServicesSpeech_iOS", "-F${project.buildDir}/cocoapods/synthetic/IOS/Pods/MicrosoftCognitiveServicesSpeech-iOS/MicrosoftCognitiveServicesSpeech.xcframework/ios-arm64_x86_64-simulator/MicrosoftCognitiveServicesSpeech.framework")
-//        }
-    }
+    iosSimulatorArm64()
     iosArm64()
 
     cocoapods {
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = "13.5"
-//        framework {
-//            baseName = "azure-speech"
-//            isStatic = true
-//        }
-        // TODO(Jiangc): 无法正确的完成 cinterop，难道所有的 XCFramework 都不行？
         pod("MicrosoftCognitiveServicesSpeech-iOS") {
             version = "~> 1.25"
+            packageName = "MicrosoftCognitiveServicesSpeech"
+            // 这个moduleName一定要和 framework 的名称一致，或者说与 def 里的一致，不然，无法正确的完成 cinterop
+            moduleName = "MicrosoftCognitiveServicesSpeech"
         }
     }
 
