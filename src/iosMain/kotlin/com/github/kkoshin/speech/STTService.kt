@@ -1,11 +1,14 @@
 package com.github.kkoshin.speech
 
+import MicrosoftCognitiveServicesSpeech.SPXAudioConfiguration
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
 actual class STTService actual constructor(subscriptionKey: String, region: String) {
 
     private val TAG = this::class.simpleName
+
+    private val config = SPXAudioConfiguration()
 
     private val _recognizing: MutableStateFlow<String> = MutableStateFlow("")
     actual val recognizing: Flow<String> = _recognizing
@@ -20,5 +23,6 @@ actual class STTService actual constructor(subscriptionKey: String, region: Stri
     }
 
     actual suspend fun stopRecognize() {
+
     }
 }
