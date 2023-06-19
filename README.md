@@ -22,7 +22,9 @@ allprojects {
             name = "Github Packages"
             url = uri("https://maven.pkg.github.com/kkoshin/azure-speech")
             credentials {
+                // your github usernma
                 username = GITHUB_USER
+                // https://github.com/settings/tokens
                 password = GITHUB_TOKEN
             }
         }
