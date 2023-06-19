@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "io.github.kkoshin"
-version = "0.1.0"
+version = "0.1.0-rc.1"
 val GITHUB_USERID_REPOSITORY = "kkoshin/azure-speech"
 
 repositories {
