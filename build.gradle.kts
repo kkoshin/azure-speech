@@ -1,4 +1,3 @@
-import com.android.build.gradle.internal.tasks.ModuleMetadata.Companion.load
 import java.io.File
 import java.io.FileInputStream
 import java.util.*
@@ -98,8 +97,12 @@ publishing {
 //            }
 //        }
         maven {
+
+            val localFile = File(rootProject.rootDir, "local.properties")
             val localProp = Properties().apply {
-                load(FileInputStream(File(rootProject.rootDir, "local.properties")))
+                if (localFile.exists()) {
+                    load(FileInputStream(localFile))
+                }
             }
 
             name = "GitHubPackages"
