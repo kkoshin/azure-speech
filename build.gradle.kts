@@ -1,3 +1,8 @@
+import com.android.build.gradle.internal.tasks.ModuleMetadata.Companion.load
+import java.io.File
+import java.io.FileInputStream
+import java.util.*
+
 plugins {
     kotlin("multiplatform") version "1.8.20"
     kotlin("native.cocoapods") version "1.8.20"
@@ -6,7 +11,8 @@ plugins {
 }
 
 group = "io.github.kkoshin"
-version = "0.1.0-SNAPSHOT"
+version = "0.1.0"
+val GITHUB_USERID_REPOSITORY = "kkoshin/azure-speech"
 
 repositories {
     google()
@@ -83,12 +89,28 @@ android {
 
 publishing {
     repositories {
+//        maven {
+//            name = "OSSRH"
+//            setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+//            credentials {
+//                username = System.getenv("MAVEN_USERNAME")
+//                password = System.getenv("MAVEN_PASSWORD")
+//            }
+//        }
         maven {
-            name = "OSSRH"
-            setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            val localProp = Properties().apply {
+                load(FileInputStream(File(rootProject.rootDir, "local.properties")))
+            }
+
+            name = "GitHubPackages"
+            /** Configure path of your package repository on Github
+             ** Replace GITHUB_USERID with your/organisation Github userID
+             ** and REPOSITORY with the repository name on GitHub
+             */
+            url = uri("https://maven.pkg.github.com/$GITHUB_USERID_REPOSITORY")
             credentials {
-                username = System.getenv("MAVEN_USERNAME")
-                password = System.getenv("MAVEN_PASSWORD")
+                username = localProp["gpr.usr"]?.toString() ?: System.getenv("USERNAME")
+                password = localProp["gpr.key"]?.toString() ?: System.getenv("TOKEN")
             }
         }
     }
