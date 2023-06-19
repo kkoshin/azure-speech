@@ -6,15 +6,9 @@ wrapper for https://learn.microsoft.com/en-us/azure/cognitive-services/speech-se
 
 To use the package inside your application, just add the github repository to your repository list.
 
-> Add the credentials section if the repository isn't public.
-
-Current supported Targets:
-- Android 
-- iosarm64
-- iossimulatorarm64
-
 ```kotlin
-allprojects {
+// settings.gradle.kts
+dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
@@ -22,7 +16,7 @@ allprojects {
             name = "Github Packages"
             url = uri("https://maven.pkg.github.com/kkoshin/azure-speech")
             credentials {
-                // your github usernma
+                // your github username
                 username = GITHUB_USER
                 // https://github.com/settings/tokens
                 password = GITHUB_TOKEN
@@ -30,8 +24,30 @@ allprojects {
         }
     }
 }
+```
 
-dependencies {
-    implementation("io.github.kkoshin:azure-speech:$version")
+Update dependencies in your KMM module. Current supported Targets:
+- Android
+- iosarm64
+- iossimulatorarm64
+
+```kotlin
+// build.gradle.kts
+cocoapods {
+    // ...
+    pod("MicrosoftCognitiveServicesSpeech-iOS") {
+        version = "~> 1.25"
+        packageName = "MicrosoftCognitiveServicesSpeech"
+        moduleName = "MicrosoftCognitiveServicesSpeech"
+    }
+}
+
+sourceSets {
+    val commonMain by getting {
+        dependencies {
+            //...
+            implementation("io.github.kkoshin:azure-speech:$version")
+        }
+    }
 }
 ```
