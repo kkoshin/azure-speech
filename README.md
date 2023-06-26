@@ -10,18 +10,8 @@ To use the package inside your application, just add the github repository to yo
 // settings.gradle.kts
 dependencyResolutionManagement {
     repositories {
-        google()
+        //...
         mavenCentral()
-        maven {
-            name = "Github Packages"
-            url = uri("https://maven.pkg.github.com/kkoshin/azure-speech")
-            credentials {
-                // your github username
-                username = GITHUB_USER
-                // https://github.com/settings/tokens
-                password = GITHUB_TOKEN
-            }
-        }
     }
 }
 ```

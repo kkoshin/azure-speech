@@ -1,17 +1,13 @@
-import java.io.File
-import java.io.FileInputStream
-import java.util.*
-
 plugins {
     kotlin("multiplatform") version "1.8.20"
     kotlin("native.cocoapods") version "1.8.20"
     id("com.android.library")
     id("maven-publish")
+    signing
 }
 
 group = "io.github.kkoshin"
 version = "0.1.0-rc.1"
-val GITHUB_USERID_REPOSITORY = "kkoshin/azure-speech"
 
 repositories {
     google()
@@ -87,34 +83,51 @@ android {
 }
 
 publishing {
-    repositories {
-//        maven {
-//            name = "OSSRH"
-//            setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-//            credentials {
-//                username = System.getenv("MAVEN_USERNAME")
-//                password = System.getenv("MAVEN_PASSWORD")
-//            }
-//        }
-        maven {
-
-            val localFile = File(rootProject.rootDir, "local.properties")
-            val localProp = Properties().apply {
-                if (localFile.exists()) {
-                    load(FileInputStream(localFile))
+    publications {
+        publications.withType<MavenPublication> {
+            pom {
+                name.set("azure-speech")
+                description.set("azure speech for Kotlin Multiplatform")
+                url.set("https://github.com/kkoshin/azure-speech")
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://github.com/kkoshin/azure-speech/blob/main/LICENSE")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("kkoshin")
+                        name.set("Ko Shin")
+                        email.set("koshin.1116@gmail.com")
+                    }
+                }
+                scm {
+                    url.set("https://github.com/kkoshin/azure-speech")
+                    connection.set("scm:git:https://github.com/kkoshin/azure-speech.git")
+                    developerConnection.set("scm:git:https://github.com/kkoshin/azure-speech.git")
                 }
             }
-
-            name = "GitHubPackages"
-            /** Configure path of your package repository on Github
-             ** Replace GITHUB_USERID with your/organisation Github userID
-             ** and REPOSITORY with the repository name on GitHub
-             */
-            url = uri("https://maven.pkg.github.com/$GITHUB_USERID_REPOSITORY")
+        }
+    }
+    repositories {
+        maven {
+            name = "OSSRH"
+            setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
             credentials {
-                username = localProp["gpr.usr"]?.toString() ?: System.getenv("USERNAME")
-                password = localProp["gpr.key"]?.toString() ?: System.getenv("TOKEN")
+                username = System.getenv("MAVEN_USERNAME")
+                password = System.getenv("MAVEN_PASSWORD")
             }
         }
+    }
+
+    signing {
+        // gpg -K --keyid-format short
+        val SIGNING_KEY_ID = System.getenv("SIGNING_KEY_ID")
+        // gpg --armor --export-secret-key
+        val SIGNING_KEY = System.getenv("SIGNING_KEY")
+        val SIGNING_PASSWORD = System.getenv("SIGNING_PASSWORD")
+        useInMemoryPgpKeys(SIGNING_KEY_ID, SIGNING_KEY, SIGNING_PASSWORD)
+        sign(publishing.publications)
     }
 }
