@@ -42,7 +42,7 @@ jobs:
         uses: gradle/gradle-build-action@v2.4.2
   #      if: ${{ steps.regex-match.outputs.match == github.event.release.tag_name  }}
         with:
-          arguments: publish
+          arguments: publishAllPublicationsToOSSRHRepository
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
